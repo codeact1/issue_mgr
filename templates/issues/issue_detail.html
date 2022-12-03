@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block title %}{{ issue.title }}{% endblock title %}
+
+
+{% block content %}
+<h1>{{ issue.title }}</h1>
+<small>Created by: {{ issue.author }} | On : {{ issue.created_on }}</small>
+<p>{{ issue.description }}</p>
+<p>
+    <a href="{% url 'edit_issue' issue.id %}" class="btn btn-success">Edit</a>
+
+</p>
+<p>
+    <a href="{% url 'delete_issue' issue.id %}" class="btn btn-danger">Delete</a>
+</p>
+
+
+<a href="{% url 'home' %}">Click here</a> to go to home page.
+{% endblock content %}

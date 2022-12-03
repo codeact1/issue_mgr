@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Issues{% endblock title %}
+
+{% block content %}
+<h1>Issues</h1>
+
+{% for issues in issue_list %}
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ issues.status }}</h5>
+                <p class="card-text">{{ issue.description }}</p>
+                <a href="{% url 'issue_detail' %}" class="btn btn-primary">See Details</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ issues.status }}</h5>
+                <p class="card-text">{{ issue.description }}</p>
+                <a href="#" class="btn btn-primary">See Details</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ issues.status }}</h5>
+                <p class="card-text">{{ issue.description }}</p>
+                <a href="#" class="btn btn-primary">See Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
