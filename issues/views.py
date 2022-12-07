@@ -14,7 +14,7 @@ class IssuePageView(ListView):
     model = Issue
     template_name = 'issues/issue.html'
 
-    def populate_issue_list(self, name, staus, reporter, context):
+    def populate_issue_list(self, name, status, reporter, context):
         context[name] = Issue.objects.filter(
             status=status
         ).filter(
@@ -64,7 +64,7 @@ class IssueListView(ListView):
         role = Role.objects.get(name="Product Owner")
         product_owner = CustomUser.objects.filter(
             role=role).get(team=team)
-            
+        context["product_owner"] = product_owner    
         context["to_do"] = Issue.objects.filter(status=to_do_status)
         context["in_progress"] = Issue.objects.filter(status=in_progress_status)
         context["done"] = Issue.objects.filter(status=done_status)

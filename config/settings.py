@@ -131,3 +131,4 @@ LOGIN_REDIRECT_URL = 'issues'
 LOGOUT_REDIRECT_URL = 'issues'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
