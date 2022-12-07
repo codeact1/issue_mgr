@@ -3,6 +3,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from.models import Issue, Status 
+from accounts.models import Role, Team, CustomUser
+from .models import Issue, Status, Priority
 
 from django.urls import reverse_lazy
 
@@ -11,6 +13,16 @@ from .models import Issue
 class IssuePageView(ListView):
     model = Issue
     template_name = 'issues/issue.html'
+
+    def populate_issue_list(self, name, staus, reporter, context):
+        context[name] = Issue.objects.filter(
+            status=status
+        ).filter(
+            reporter=reporter
+        ).order_by(
+            "created_on"
+        ).reverse()
+
 
 class IssueDetailView(DetailView):
     model = Issue
@@ -45,6 +57,15 @@ class IssueListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        status = Status.objects.get(id=1)
-        context["status"] = status
+        to_do_status = Status.objects.get(name="To Do")
+        in_progress_status = Status.objects.get(name="In Progress")
+        done_status = Status.objects.get(name="Done")
+        team = self.request.user.team
+        role = Role.objects.get(name="Product Owner")
+        product_owner = CustomUser.objects.filter(
+            role=role).get(team=team)
+            
+        context["to_do"] = Issue.objects.filter(status=to_do_status)
+        context["in_progress"] = Issue.objects.filter(status=in_progress_status)
+        context["done"] = Issue.objects.filter(status=done_status)
         return context
